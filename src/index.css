@@ -33,8 +33,7 @@
 .die {
   width: 100px;
   height: 100px;
-  background-color: #f5f5f5;
-  box-shadow: inset;
+  box-shadow: 10px 10px 2px 1px rgba(42, 31, 57, 0.2);
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -56,4 +55,8 @@
 
 .butt:hover {
   background-color: slateblue;
+}
+
+.butt:active {
+  box-shadow: inset 5px 5px 2px 1px rgba(77, 63, 97, 0.2);
 }

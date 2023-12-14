@@ -1,22 +1,39 @@
 import { useState } from 'react';
 import Die from './Die';
+import { nanoid } from 'nanoid'
 
 function App() {
-  const [dieArr, setDieArr] = useState([]);
+  const [dieArr, setDieArr] = useState(createNewDice());
  
   function genRandNum() {
     return Math.floor(Math.random()* 6);
   }
 
- 
-  for (let i = 1; i < 11; i++) {
-    dieArr.push(
-      {
-        id: i, num: genRandNum(), held: false
+  function createNewDice() {
+    const arr = [];
+    for (let i = 0; i < 10; i++) {
+    arr.push({
+        id: nanoid(), num: genRandNum(), isHeld: false
       })
+    }
+    return arr;
+  }
+  
+  function rollDice() {
+    setDieArr(createNewDice())
   }
 
-   const dieElems = dieArr.map(die => <Die key={die.id} num={die.num}/>)
+  function toggleHeld(id) {
+    setDieArr(prevDice => prevDice.map(die => {
+      if (die.id === id) {
+        return {...die, isHeld: !die.isHeld}
+      } else { 
+        return die;
+      }
+    }))
+  }
+
+   const dieElems = dieArr.map(die => <Die key={die.id} num={die.num} isHeld={die.isHeld} toggle={() => toggleHeld(die.id)}/>)
 
 
    return (
@@ -28,7 +45,7 @@ function App() {
       <div className='dice-container'>
         {dieElems}
       </div>
-      <button className="butt">Click me to roll the dice!</button>
+      <button className="butt" onClick={rollDice}>Click me to roll the dice!</button>
     </div>
   )
 }
