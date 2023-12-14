@@ -9,18 +9,28 @@ function App() {
     return Math.floor(Math.random()* 6);
   }
 
+  function genOneDie() {
+    return {
+      id: nanoid(), num: genRandNum(), isHeld: false
+    }
+  }
+
   function createNewDice() {
     const arr = [];
     for (let i = 0; i < 10; i++) {
-    arr.push({
-        id: nanoid(), num: genRandNum(), isHeld: false
-      })
+    arr.push(genOneDie())
     }
     return arr;
   }
   
   function rollDice() {
-    setDieArr(createNewDice())
+    setDieArr(prevDice => prevDice.map(die => {
+      if (die.isHeld){
+        return die
+      } else {
+        return genOneDie();
+      }
+    }))
   }
 
   function toggleHeld(id) {
