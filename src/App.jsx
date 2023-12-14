@@ -1,10 +1,18 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Die from './Die';
 import { nanoid } from 'nanoid'
 
 function App() {
   const [dieArr, setDieArr] = useState(createNewDice());
+  const [isGameWon, setIsGameWon] = useState(false);
  
+  useEffect(() => {
+    const winningNum = dieArr[0].num
+    if (dieArr.every(die => die.isHeld === true) && dieArr.every(die => die.num === winningNum)) {
+     setIsGameWon(prevGame => !prevGame)
+    }
+  }, [dieArr])
+
   function genRandNum() {
     return Math.floor(Math.random()* 6);
   }
@@ -25,8 +33,11 @@ function App() {
   
   function rollDice() {
     setDieArr(prevDice => prevDice.map(die => {
-      if (die.isHeld){
-        return die
+      if (isGameWon){
+        setIsGameWon(false);
+        return genOneDie();
+      } else if (die.isHeld && isGameWon === false){
+        return die;
       } else {
         return genOneDie();
       }
@@ -52,10 +63,8 @@ function App() {
         <h1>Tensies!</h1>
         <p>You know the deal :3</p>
       </div>
-      <div className='dice-container'>
-        {dieElems}
-      </div>
-      <button className="butt" onClick={rollDice}>Click me to roll the dice!</button>
+      {isGameWon ? <div style={{fontSize: '48px'}}>CONGRATS! YOU HAVE WON THE GAME!</div> : <div className='dice-container'>{dieElems}</div>}
+      <button className="butt" onClick={rollDice}>{isGameWon ? 'CLICK ME TO RESTART THE GAME' : 'Click me to roll the dice!'}</button>
     </div>
   )
 }
