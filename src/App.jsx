@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Die from './Die';
 import { nanoid } from 'nanoid'
+import Confetti from 'react-confetti'
 
 function App() {
   const [dieArr, setDieArr] = useState(createNewDice());
@@ -32,16 +33,14 @@ function App() {
   }
   
   function rollDice() {
-    setDieArr(prevDice => prevDice.map(die => {
-      if (isGameWon){
-        setIsGameWon(false);
-        return genOneDie();
-      } else if (die.isHeld && isGameWon === false){
-        return die;
-      } else {
-        return genOneDie();
-      }
-    }))
+    if (!isGameWon) {
+      setDieArr((prevDice => prevDice.map(die => {
+        return die.isHeld ? die : genOneDie();
+      })))
+    } else {
+      setIsGameWon(false);
+      setDieArr(createNewDice());
+    }
   }
 
   function toggleHeld(id) {
@@ -59,6 +58,7 @@ function App() {
 
    return (
     <div className='bod'>
+      {isGameWon && <Confetti />}
       <div className="text">
         <h1>Tensies!</h1>
         <p>You know the deal :3</p>
