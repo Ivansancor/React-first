@@ -1,34 +1,35 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import Die from './Die';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [dieArr, setDieArr] = useState([]);
+ 
+  function genRandNum() {
+    return Math.floor(Math.random()* 6);
+  }
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+ 
+  for (let i = 1; i < 11; i++) {
+    dieArr.push(
+      {
+        id: i, num: genRandNum(), held: false
+      })
+  }
+
+   const dieElems = dieArr.map(die => <Die key={die.id} num={die.num}/>)
+
+
+   return (
+    <div className='bod'>
+      <div className="text">
+        <h1>Tensies!</h1>
+        <p>You know the deal :3</p>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+      <div className='dice-container'>
+        {dieElems}
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+      <button className="butt">Click me to roll the dice!</button>
+    </div>
   )
 }
 
