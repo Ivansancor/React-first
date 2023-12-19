@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Die from './Die';
+import Winner from './Winner';
 import { nanoid } from 'nanoid'
 import Confetti from 'react-confetti'
 
@@ -7,6 +8,8 @@ function App() {
   const [dieArr, setDieArr] = useState(createNewDice());
   const [isGameWon, setIsGameWon] = useState(false);
  
+  const [rounds, setRounds] = useState(0)
+
   useEffect(() => {
     const winningNum = dieArr[0].num
     if (dieArr.every(die => die.isHeld === true) && dieArr.every(die => die.num === winningNum)) {
@@ -34,11 +37,13 @@ function App() {
   
   function rollDice() {
     if (!isGameWon) {
+      setRounds(prevRounds => prevRounds + 1);
       setDieArr((prevDice => prevDice.map(die => {
         return die.isHeld ? die : genOneDie();
       })))
     } else {
       setIsGameWon(false);
+      setRounds(0);
       setDieArr(createNewDice());
     }
   }
@@ -61,9 +66,10 @@ function App() {
       {isGameWon && <Confetti />}
       <div className="text">
         <h1>Tensies!</h1>
-        <p>You know the deal :3</p>
+        {!isGameWon && <p>You know the deal :3</p>}
       </div>
-      {isGameWon ? <div style={{fontSize: '48px'}}>CONGRATS! YOU HAVE WON THE GAME!</div> : <div className='dice-container'>{dieElems}</div>}
+      {!isGameWon && <p className='counter'>Rolled: <span style={{fontWeight: 'bold', fontSize: '24px'}}>{rounds}</span> times</p>}
+      {isGameWon ? <Winner rounds={rounds}/> : <div className='dice-container'>{dieElems}</div>}
       <button className="butt" onClick={rollDice}>{isGameWon ? 'CLICK ME TO RESTART THE GAME' : 'Click me to roll the dice!'}</button>
     </div>
   )
