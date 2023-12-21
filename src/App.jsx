@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Die from './Die';
 import Winner from './Winner';
 import Timer from './Timer'
+import Ranking from './Ranking'
 import { nanoid } from 'nanoid'
 import Confetti from 'react-confetti'
 
@@ -43,9 +44,10 @@ function App() {
         return die.isHeld ? die : genOneDie();
       })))
     } else {
+      localStorage.setItem('results', JSON.stringify(rounds));
       setIsGameWon(false);
       setRounds(0);
-      setDieArr(createNewDice());
+      setDieArr(createNewDice())
     }
   }
 
@@ -73,6 +75,7 @@ function App() {
       {!isGameWon && <Timer />}
       {!isGameWon && <p className='counter'>Rolled: <span style={{fontWeight: 'bold', fontSize: '24px'}}>{rounds}</span> times</p>}
       {isGameWon ? <Winner rounds={rounds}/> : <div className='dice-container'>{dieElems}</div>}
+      {isGameWon && <Ranking rounds={rounds}/>}
       <button className="butt" onClick={rollDice}>{isGameWon ? 'CLICK ME TO RESTART THE GAME' : 'Click me to roll the dice!'}</button>
     </div>
   )
