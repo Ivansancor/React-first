@@ -60,6 +60,7 @@ function App() {
 
    const dieElems = dieArr.map(die => <Die key={die.id} num={die.num} isHeld={die.isHeld} toggle={() => toggleHeld(die.id)}/>)
 
+  
 
    return (
     <div className='bod'>

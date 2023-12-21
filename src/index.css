@@ -42,6 +42,13 @@
   font-weight: bold;
 }
 
+.die-img {
+  width: 100%;
+}
+.die-img-five {
+  height: 118%;
+}
+
 .butt {
   margin-top: 20px;
   border: none;
