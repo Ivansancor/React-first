@@ -44,7 +44,10 @@ function App() {
         return die.isHeld ? die : genOneDie();
       })))
     } else {
-      localStorage.setItem('results', JSON.stringify(rounds));
+      const previousGames = JSON.parse(localStorage.getItem("results")) || []
+      previousGames.push(rounds)
+      if (previousGames.length > 5) previousGames.shift();
+      localStorage.setItem('results', JSON.stringify(previousGames));
       setIsGameWon(false);
       setRounds(0);
       setDieArr(createNewDice())
