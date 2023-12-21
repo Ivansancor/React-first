@@ -75,8 +75,10 @@ function App() {
         <h1>Tensies!</h1>
         {!isGameWon && <p>You know the deal :3</p>}
       </div>
-      {!isGameWon && <Timer />}
-      {!isGameWon && <p className='counter'>Rolled: <span style={{fontWeight: 'bold', fontSize: '24px'}}>{rounds}</span> times</p>}
+      <div className='rolls-time'>
+        {!isGameWon && <Timer />}
+        {!isGameWon && <p className='counter'>Rolled: <span style={{fontWeight: 'bold', fontSize: '24px'}}>{rounds}</span> times</p>}
+      </div>
       {isGameWon ? <Winner rounds={rounds}/> : <div className='dice-container'>{dieElems}</div>}
       {isGameWon && <Ranking rounds={rounds}/>}
       <button className="butt" onClick={rollDice}>{isGameWon ? 'CLICK ME TO RESTART THE GAME' : 'Click me to roll the dice!'}</button>

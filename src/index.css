@@ -10,8 +10,8 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
+  width: 100vw;
   font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  position: relative;
 }
 
 .text {
@@ -19,7 +19,7 @@
 }
 
 .dice-container {
-  height: 300px;
+  min-height: 300px;
   width: 700px;
   background-color: darkslateblue;
   border-radius: 20px;
@@ -53,7 +53,7 @@
   margin-top: 20px;
   border: none;
   width: 200px;
-  height: 50px;
+  min-height: 60px;
   border-radius: 10px;
   font-size: 16px;
   color: white;
@@ -68,14 +68,49 @@
   box-shadow: inset 5px 5px 2px 1px rgba(77, 63, 97, 0.2);
 }
 
+.rolls-time {
+  position: relative;
+  height: 100px;
+  width: 700px;
+}
+
+.congrats-text {
+  font-size: 48px;
+}
+
 .counter {
   position: absolute;
-  top: 90px;
-  right: 290px;
+  top: 0;
+  right: 0;
 }
 
 .timer {
   position: absolute;
-  top: 80px;
-  right: 290px;
+  top: 0;
+  right: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .bod {
+    height: 800px;
+  }
+
+  .dice-container {
+    min-height: 600px;
+    width: 300px;
+    grid-template: 1fr 1fr 1fr 1fr 1fr/ repeat(2, 1fr);
+  }
+  
+  .congrats-text {
+    font-size: 28px;
+  }
+
+  .counter {
+    display: none;
+  }
+
+  .timer {
+    display: none;
+  }
+
 }
