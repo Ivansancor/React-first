@@ -73,3 +73,9 @@
   top: 90px;
   right: 290px;
 }
+
+.timer {
+  position: absolute;
+  top: 80px;
+  right: 290px;
+}

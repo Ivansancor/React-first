@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Die from './Die';
 import Winner from './Winner';
+import Timer from './Timer'
 import { nanoid } from 'nanoid'
 import Confetti from 'react-confetti'
 
@@ -8,7 +9,7 @@ function App() {
   const [dieArr, setDieArr] = useState(createNewDice());
   const [isGameWon, setIsGameWon] = useState(false);
  
-  const [rounds, setRounds] = useState(0)
+  const [rounds, setRounds] = useState(0);
 
   useEffect(() => {
     const winningNum = dieArr[0].num
@@ -69,6 +70,7 @@ function App() {
         <h1>Tensies!</h1>
         {!isGameWon && <p>You know the deal :3</p>}
       </div>
+      {!isGameWon && <Timer />}
       {!isGameWon && <p className='counter'>Rolled: <span style={{fontWeight: 'bold', fontSize: '24px'}}>{rounds}</span> times</p>}
       {isGameWon ? <Winner rounds={rounds}/> : <div className='dice-container'>{dieElems}</div>}
       <button className="butt" onClick={rollDice}>{isGameWon ? 'CLICK ME TO RESTART THE GAME' : 'Click me to roll the dice!'}</button>
